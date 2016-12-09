@@ -41,7 +41,6 @@ spec:
   - port: 4151
     targetPort: 4151
     name: http
-  clusterIP: None
   selector:
     app: nsq
     component: nsqd
@@ -65,8 +64,7 @@ spec:
   - port: 4171
     targetPort: 4171
     name: http
-  clusterIP: None
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: nsq
     component: nsqadmin
@@ -177,13 +175,12 @@ spec:
         requests:
           storage: 1Gi
 ---
-apiVersion: apps/v1alpha1
-kind: PetSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: nsqadmin
 spec:
-  serviceName: "nsqadmin"
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
