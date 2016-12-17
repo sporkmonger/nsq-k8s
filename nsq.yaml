@@ -18,6 +18,7 @@ spec:
     targetPort: 4161
     name: http
   clusterIP: None
+  type: NodePort
   selector:
     app: nsq
     component: nsqlookupd
@@ -41,6 +42,7 @@ spec:
   - port: 4151
     targetPort: 4151
     name: http
+  type: NodePort
   selector:
     app: nsq
     component: nsqd
@@ -69,8 +71,8 @@ spec:
     app: nsq
     component: nsqadmin
 ---
-apiVersion: apps/v1alpha1
-kind: PetSet
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: nsqlookupd
 spec:
@@ -109,8 +111,8 @@ spec:
       # needed for graceful shutdown of a node.
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1alpha1
-kind: PetSet
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: nsqd
 spec:
